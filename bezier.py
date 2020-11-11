@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import os
 import shutil
+import argparse
 
 def bezier(t, ctrl):
     t = np.array(t)
@@ -93,7 +94,9 @@ def draw_bezier_frame(t, M, idx, frames_dir):
     plt.close()
 
 if __name__ == '__main__':
-    frames_dir = 'frames/'
+    parser = argparse.ArgumentParser(description='Generate Bézier curves and animations.')
+    parser.add_argument('--frames-dir', default='frames/')
+    args = parser.parse_args()
 
     ctrl = []
     while True:
@@ -109,7 +112,7 @@ if __name__ == '__main__':
 
     M = bezier(t, ctrl)
 
-    if os.path.exists(frames_dir):
-        shutil.rmtree(frames_dir)
-    os.makedirs(frames_dir)
-    animate_bezier(t, M, frames_dir)
+    if os.path.exists(args.frames_dir):
+        shutil.rmtree(args.frames_dir)
+    os.makedirs(args.frames_dir)
+    animate_bezier(t, M, args.frames_dir)
